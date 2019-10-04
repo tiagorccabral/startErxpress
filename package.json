@@ -4,6 +4,8 @@
   "description": "Node.js with Express starter project",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "server": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -13,6 +15,7 @@
   "author": "Tiago Cabral",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "nodemon": "^1.19.3"
   }
 }
