@@ -18,6 +18,9 @@ pids
 dist/
 build/
 
+# Db files
+data/
+
 # Dependency directory
 node_modules
 

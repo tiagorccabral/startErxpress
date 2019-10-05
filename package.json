@@ -15,7 +15,11 @@
   "author": "Tiago Cabral",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^3.0.6",
+    "bluebird": "^3.7.0",
+    "esm": "^3.2.25",
     "express": "^4.17.1",
+    "mongoose": "^5.7.3",
     "nodemon": "^1.19.3"
   }
 }
