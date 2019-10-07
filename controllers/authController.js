@@ -41,3 +41,29 @@ export const register = async (req, res, next) => {
     next(new APIError(error, INTERNAL_SERVER_ERROR));
   }
 };
+
+export const login = async (req, res, next) => {
+  try {
+    let { email } = req.body;
+    const { password, app, isFb, isGoogle } = req.body;
+    email = cleanString(email);
+    // login logic
+    let user = null;
+
+    const regex = new RegExp(['^', email, '$'].join(''), 'i');
+    user = await User.findOne({ email: { $regex: regex } }, '+password');
+    if (!user) return next(new APIError('Record Not Found', NOT_FOUND));
+
+    // compare Pwd
+    user.comparePassword(password, (passwordError, isMatch) => {
+      if (passwordError || !isMatch)
+        return next(new APIError('Incorrect password', UNAUTHORIZED, true));
+      const userStringfied = JSON.stringify(user);
+      const token = jwt.sign(userStringfied, jwtSecret);
+      const message = 'User successfully logged in';
+      return res.send({ success: true, message, data: { jwtAccessToken: `JWT ${token}`, user } });
+    });
+  } catch (error) {
+    next(new APIError(error, INTERNAL_SERVER_ERROR));
+  }
+};
