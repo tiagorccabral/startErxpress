@@ -1,6 +1,7 @@
 import Promise from 'bluebird';
 import mongoose from 'mongoose';
 import express from 'express';
+import app from './config/express';
 
 // promisify mongoose
 Promise.promisifyAll(mongoose);
@@ -15,8 +16,6 @@ const options = {
   poolSize: 50,
   autoIndex: false,
 };
-
-const app = express();
 
 const port = process.env.PORT || 5000;
 const host = 'mongodb://localhost/starterXpress-development';
@@ -34,6 +33,7 @@ if (process.env.NODE_ENV === 'test') {
       /* Drop the DB */
       mongoose.connection.once('open', () => {
         mongoose.connection.db.dropDatabase();
+        console.log('Mongodb Server connected.');
         return listen();
       });
     }

@@ -57,6 +57,42 @@ UserSchema.methods.comparePassword = function comparePassword(pw, cb) {
   });
 };
 
+
+ /**
+ * Statics
+ */
+UserSchema.statics = {
+  /**
+   * Get user
+   * @param {ObjectId} id - The objectId of user.
+   * @returns {Promise<User, APIError>}
+   */
+  get(id) {
+    return this.findById(id)
+      .execAsync()
+      .then(user => {
+        if (user) {
+          return user;
+        }
+        const err = new APIError('No such user exists!', httpStatus.NOT_FOUND);
+        return Promise.reject(err);
+      });
+  },
+  /**
+   * List users in descending order of 'createdAt' timestamp.
+   * @param {number} skip - Number of users to be skipped.
+   * @param {number} limit - Limit number of users to be returned.
+   * @returns {Promise<User[]>}
+   */
+  list({ skip = 0, limit = 20 } = {}) {
+    return this.find({ $or: [{ userType: 'rider' }, { userType: 'driver' }] })
+      .sort({ _id: -1 })
+      .select('-__v')
+      .skip(skip)
+      .limit(limit)
+      .execAsync();
+  },
+};
 /**
  * @typedef User
  */
