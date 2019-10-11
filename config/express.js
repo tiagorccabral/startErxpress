@@ -31,6 +31,16 @@ app.use('/api', routes);
 /**
  * catch 404 and forward to error handler
  */
-app.use((req, res, next) => next(new APIError('API not found', httpStatus.NOT_FOUND)));
+app.use((err, req, res, next) => {
+  if (err && err.error && err.error.isJoi) {
+    // we had a joi error, let's return a custom 400 json response
+    res.status(400).json({
+      type: err.type, // will be "query" here, but could be "headers", "body", or "params"
+      message: err.error.toString()
+    });
+  } else {
+    next(new APIError('API not found', httpStatus.NOT_FOUND));
+  }
+});
 
 export default server;

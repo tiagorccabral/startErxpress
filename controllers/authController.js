@@ -1,4 +1,4 @@
-import { UNAUTHORIZED, INTERNAL_SERVER_ERROR } from 'http-status';
+import { UNAUTHORIZED, INTERNAL_SERVER_ERROR, NOT_FOUND } from 'http-status';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import APIError from '../helpers/APIError';
