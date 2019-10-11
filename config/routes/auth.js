@@ -8,12 +8,22 @@ import {
   register,
 } from '../../controllers/authController';
 
-const validator = createValidator();
+const validator = createValidator({
+  // This options forces validation to pass any errors the express error handler 
+  // instead of generating a 400 error
+  passError: true
+});
 
 const router = express.Router();
 
-// router.route('/login').post(validate(loginParam), login);
-router.post('/login', validator.params(loginValidator), login);
-router.post('/register', validator.params(createUserValidator), register);
+// @route   POST api/auth/login
+// @desc    Authenticates a user, given a email and password
+// @access  public
+router.post('/login', validator.body(loginValidator), login);
+
+// @route   POST api/auth/register
+// @desc    Register a new user into the system
+// @access  public
+router.post('/register', validator.body(createUserValidator), register);
 
 export default router;
