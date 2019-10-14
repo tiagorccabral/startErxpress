@@ -6,7 +6,7 @@ import methodOverride from 'method-override';
 import httpStatus from 'http-status';
 import passport from 'passport';
 import APIError from '../helpers/APIError';
-import routes from '../config/routes/index';
+import routes from '../routes/index';
 import passConfig from './passportConfig';
 
 // Initialize express app
