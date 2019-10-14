@@ -2,11 +2,11 @@ import express from 'express';
 import { createValidator } from 'express-joi-validation';
 import {
   createUserValidator, loginValidator
-} from '../validators/paramValidators';
+} from '../config/validators/paramValidators';
 import {
   login,
   register,
-} from '../../controllers/authController';
+} from '../controllers/authController';
 
 const validator = createValidator({
   // This options forces validation to pass any errors the express error handler 
